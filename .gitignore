@@ -3,9 +3,12 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/.idea/
+/out/
 
 ### Java ###
 *.class
+*.iml
 
 # BlueJ files
 *.ctxt
@@ -39,3 +42,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # End of https://www.gitignore.io/api/java,gradle
+
+
