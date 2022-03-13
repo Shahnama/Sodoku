@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 import static com.navid.sodoku.Data.*;
 
-public class MainCanvas extends JPanel implements MouseListener, ActionListener, KeyListener {
+public class MainCanvas extends JPanel implements KeyListener,ActionListener,MouseListener{
 
     private static final int GUIDE_SIZE = 20;
     private static final int V_MARGIN_GUIDE = 15;
@@ -24,6 +24,7 @@ public class MainCanvas extends JPanel implements MouseListener, ActionListener,
     public MainCanvas(){
         this.addMouseListener(this);
         this.addKeyListener(this);
+        this.setFocusable(true);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class MainCanvas extends JPanel implements MouseListener, ActionListener,
     private void drawRectangle(Graphics graphics,Integer[] selectedCell ){
         int row = selectedCell[0];
         int col = selectedCell[1] ;
-        Color color = new Color(250,0,0,50);
+        Color color = new Color(0,0,250,30);
         graphics.setColor(color);
         graphics.fillRect(col * ACTUAL_SIZE  + MARGIN,MARGIN,ACTUAL_SIZE,CELL_COUNT*ACTUAL_SIZE);
         graphics.fillRect(MARGIN,row*ACTUAL_SIZE+ MARGIN,CELL_COUNT*ACTUAL_SIZE,ACTUAL_SIZE);
@@ -54,31 +55,37 @@ public class MainCanvas extends JPanel implements MouseListener, ActionListener,
             for(int row=0;row<CELL_COUNT;row++) {
                 if (CELL_VALUES[row][col] != 0) {
                     int fontSize = 50;
-                    String numString = String.valueOf(CELL_VALUES[row][col]);
+                    Integer num = CELL_VALUES[row][col];
+                    String numString = String.valueOf(num);
 
                     Graphics2D g2d = (Graphics2D) graphics;
-                    g2d.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-                    g2d.setColor(Color.RED);
+                    g2d.setColor(Color.BLUE);
+                    g2d.setFont(new Font("Serif", Font.PLAIN, fontSize));
+                    if (Logic.countNum(row, col, num)>0) {
+                        g2d.setColor(Color.RED);
+                    }
+
                     g2d.drawString(
                             numString,
                             MARGIN / 2 * 3 + col * ACTUAL_SIZE,
-                            MARGIN / 3 * 2 + ( row + 1 ) * ACTUAL_SIZE
+                            MARGIN / 3 * 2 + (row + 1) * ACTUAL_SIZE
                     );
 
-                }
-                for (int rowG = 0; rowG < GUIDE_COUNT; rowG++) {
-                    for (int colG = 0; colG < GUIDE_COUNT; colG++) {
-                        int num = rowG + 1 + colG * GUIDE_COUNT;
-                        String numString = String.valueOf(num);
-                        int fontSize = 10;
-                        graphics.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-                        graphics.setColor(Color.BLACK);
-                        if (Data.CELL_VALUES_POSSIBILITY.get(row).get(col).contains(num)) {
-                            graphics.drawString(
-                                    numString,
-                                    H_MARGIN_GUIDE + rowG * GUIDE_SIZE + MARGIN + col * ACTUAL_SIZE,
-                                    V_MARGIN_GUIDE + colG * GUIDE_SIZE + MARGIN + row * ACTUAL_SIZE
-                            );
+                } else {
+                    for (int rowG = 0; rowG < GUIDE_COUNT; rowG++) {
+                        for (int colG = 0; colG < GUIDE_COUNT; colG++) {
+                            int num = rowG + 1 + colG * GUIDE_COUNT;
+                            String numString = String.valueOf(num);
+                            int fontSize = 10;
+                            graphics.setFont(new Font("Serif", Font.PLAIN, fontSize));
+                            graphics.setColor(Color.BLACK);
+                            if (Logic.isPossible(row, col, num)) {
+                                graphics.drawString(
+                                        numString,
+                                        H_MARGIN_GUIDE + rowG * GUIDE_SIZE + MARGIN + col * ACTUAL_SIZE,
+                                        V_MARGIN_GUIDE + colG * GUIDE_SIZE + MARGIN + row * ACTUAL_SIZE
+                                );
+                            }
                         }
                     }
                 }
@@ -114,6 +121,28 @@ public class MainCanvas extends JPanel implements MouseListener, ActionListener,
     }
 
     @Override
+    public void keyTyped(KeyEvent e) {
+        if(SELECT_CELL!=null) {
+            char ch = e.getKeyChar();
+            if(ch>='0' && ch<='9') {
+                Logic.setValue(SELECT_CELL[0], SELECT_CELL[1], ch-'0');
+                repaint();
+            }
+        }
+        System.out.println(e.getKeyChar());
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
     public void mouseClicked(MouseEvent e) {
 
         int row = (e.getY() - MARGIN) / ACTUAL_SIZE ;
@@ -128,7 +157,7 @@ public class MainCanvas extends JPanel implements MouseListener, ActionListener,
         SELECT_CELL[0] = row;
         SELECT_CELL[1] = col;
         repaint();
-        System.out.println("row:" + SELECT_CELL[0] +" col:" + SELECT_CELL[1]);
+//        System.out.println("row:" + SELECT_CELL[0] +" col:" + SELECT_CELL[1]);
     }
 
     @Override
@@ -157,21 +186,7 @@ public class MainCanvas extends JPanel implements MouseListener, ActionListener,
             Logic.setValue(SELECT_CELL[0], SELECT_CELL[1], Integer.parseInt(e.getActionCommand()));
             repaint();
         }
-        System.out.println(e.getActionCommand());
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyChar());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
+//        System.out.println(e.getActionCommand());
 
     }
 }

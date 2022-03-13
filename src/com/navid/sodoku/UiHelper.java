@@ -15,7 +15,6 @@ public class UiHelper {
     }
 
     public void createAndShowGui() {
-        Main.canvasFrame.addKeyListener(mainCanvas);
         Main.canvasFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Main.canvasFrame.getContentPane().add(this.mainCanvas);
         Main.canvasFrame.pack();
@@ -24,10 +23,10 @@ public class UiHelper {
     }
 
     private void addButton(){
-        for(int i=0;i<SIZE;i++){
+        for(int i=0;i<SIZE+1;i++){
             Button button = new Button();
-            button.setLabel(String.valueOf(i+1));
-            button.setBounds(new Rectangle(30 + i * 61,580,50,50));
+            button.setLabel(String.valueOf(i));
+            button.setBounds(new Rectangle(28 + i * 55,580,50,50));
             button.addActionListener(mainCanvas);
             mainCanvas.add(button);
         }
