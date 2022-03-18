@@ -64,11 +64,14 @@ public class MainCanvas extends JPanel implements KeyListener,ActionListener,Mou
                     if (Logic.countNum(row, col, num)>0) {
                         g2d.setColor(Color.RED);
                     }
+                    if(NON_CHANGEABLE[row][col]){
+                        g2d.setColor(Color.BLACK);
+                    }
 
                     g2d.drawString(
-                            numString,
-                            MARGIN / 2 * 3 + col * ACTUAL_SIZE,
-                            MARGIN / 3 * 2 + (row + 1) * ACTUAL_SIZE
+                        numString,
+                        MARGIN / 2 * 3 + col * ACTUAL_SIZE,
+                        MARGIN / 3 * 2 + (row + 1) * ACTUAL_SIZE
                     );
 
                 } else {

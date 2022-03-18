@@ -5,7 +5,8 @@ import static com.navid.sodoku.Data.*;
 public class Logic {
 
     public static void setValue(int row,int col,Integer value) {
-        CELL_VALUES[row][col] = value;
+        if(!NON_CHANGEABLE[row][col])
+            CELL_VALUES[row][col] = value;
     }
 
     public static boolean isPossible(int row,int col,Integer value) {

@@ -10,19 +10,34 @@ public class Main {
     public static JFrame canvasFrame;
     public static MainCanvas mainCanvas;
 
+    private static int[][] value = new int[][]{
+            {0,8,0,  0,3,5,  6,0,0},
+            {0,1,0,  0,0,0,  0,7,0},
+            {0,0,2,  0,0,0,  0,0,4},
+
+            {0,0,5,  0,1,0,  0,0,6},
+            {9,0,0,  4,0,6,  0,0,7},
+            {1,0,0,  0,7,0,  8,0,0},
+
+            {2,0,0,  0,0,0,  3,0,0},
+            {0,5,0,  0,0,0,  0,9,0},
+            {0,0,3,  5,8,0,  0,6,0},
+    };
+
     public static void main(String[] args) {
         mainCanvas = new MainCanvas();
         canvasFrame = new JFrame();
 //        Data.init();
 
 
-//        System.out.println(ROWS_VALUES);
-//        System.out.println(COLS_VALUES);
-//        System.out.println(BOXS_VALUES);
+        for(int row=0;row<9;row++){
+            for(int col=0;col<9;col++){
+                setValue(row,col,value[row][col]);
+                if(value[row][col]!=0)
+                    NON_CHANGEABLE[row][col] = true;
+            }
+        }
 
-        setValue(5,2,5);
-        setValue(3,4,2);
-        setValue(1,8,4);
         UiHelper uiHelper = new UiHelper(mainCanvas);
         SwingUtilities.invokeLater(uiHelper::createAndShowGui);
     }

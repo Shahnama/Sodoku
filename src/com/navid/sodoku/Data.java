@@ -1,16 +1,14 @@
 package com.navid.sodoku;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class Data {
     public static final int SIZE = 9;
     public static final int BOX_COUNT = 3;
 
     public static final int[][] CELL_VALUES = new int[SIZE][SIZE];
+    public static final boolean[][] NON_CHANGEABLE = new boolean[SIZE][SIZE];
     public static Integer[] SELECT_CELL = null;
+
+
 
 //    public static final List<List<Integer>> ROWS_VALUES = new ArrayList<>();
 //    public static final List<List<Integer>> COLS_VALUES = new ArrayList<>();
