@@ -38,6 +38,8 @@ jobs:
           echo $HEADER3
           echo "${{ env.HEADER }}"
           echo $TEST
+          JWT_HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e)
+          echo $JWT_HEADER
         env:
           TEST: "${{ env.HEADER }}"
 
