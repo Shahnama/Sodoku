@@ -37,6 +37,7 @@ jobs:
         run: |
           echo $HEADER3
           echo "${{ env.HEADER }}"
+          echo $TEST
         env:
-          TEST=HELLO
+          TEST: "${{ env.HEADER }}"
 
