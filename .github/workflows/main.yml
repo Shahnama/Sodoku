@@ -40,6 +40,7 @@ jobs:
           echo $TEST
           JWT_HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e)
           echo $JWT_HEADER
+          echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e
           decode=$(echo -n JWT_HEADER | openssl enc -base64 -d)
           echo $decode
         env:
